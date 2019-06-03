@@ -1,7 +1,9 @@
-package pl.trainin.payments;
+package pl.training.payments;
 
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.function.Consumer;
@@ -25,7 +27,7 @@ public class AccountsService {
     public void witdraw(Long id, long funds) {
         process(id, account -> {
             if (funds > account.getBalance()) {
-                throw new InsufficentfundsException();
+                throw new InsufficientFundsException();
             }
             account.decreaseBalance(funds);
         });
@@ -42,4 +44,13 @@ public class AccountsService {
                 .orElseThrow(AccountNotFoundException::new);
     }
 
+    public ResultPage<Account> get(int pageNumber, int pageSize) {
+        Page<Account> accountsPage = accountsRepository.findAll(PageRequest.of(pageNumber, pageSize));
+        return new ResultPage<>(accountsPage.getContent(), pageNumber, accountsPage.getTotalPages());
+    }
+
+    public void deleteById(Long id) {
+        Account account = getById(id);
+        accountsRepository.delete(account);
+    }
 }
