@@ -1,20 +1,15 @@
-package pl.training.paymnets;
+package pl.training.payments;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import pl.training.payments.Account;
-import pl.training.payments.AccountNotFoundException;
-import pl.training.payments.AccountsRepository;
-import pl.training.payments.AccountsService;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.AdditionalAnswers.returnsFirstArg;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
-public class AccountServiceTest {
+public class AccountsServiceTest {
 
     private final long NON_EXISTING_ACCOUNT_ID = 100;
     private final long FUNDS = 1_000;
