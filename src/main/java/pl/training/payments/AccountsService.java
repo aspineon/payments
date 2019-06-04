@@ -53,4 +53,5 @@ public class AccountsService {
         Account account = getById(id);
         accountsRepository.delete(account);
     }
+
 }
