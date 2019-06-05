@@ -23,6 +23,7 @@ import javax.sql.DataSource;
 public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
 
     private static final String PASSWORD_GRANT_TYPE = "password";
+    private static final String REFRESH_TOKEN_GRANT_TYPE = "refresh_token";
     private static final String DEFAULT_SCOPE = "default";
 
     @Value("${client-id}")
@@ -37,10 +38,14 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     private final DataSource dataSource;
     @NonNull
     private final PasswordEncoder passwordEncoder;
+    @NonNull
+    private final SecurityService securityService;
 
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) {
-        endpoints.authenticationManager(authenticationManagerBean).tokenStore(tokenStore);
+        endpoints.userDetailsService(securityService)
+                .authenticationManager(authenticationManagerBean)
+                .tokenStore(tokenStore);
     }
 
     @Override
@@ -59,7 +64,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
         } catch (Exception exception) {
             clients.jdbc(dataSource)
                     .withClient(clientId)
-                    .authorizedGrantTypes(PASSWORD_GRANT_TYPE)
+                    .authorizedGrantTypes(PASSWORD_GRANT_TYPE, REFRESH_TOKEN_GRANT_TYPE)
                     .scopes(DEFAULT_SCOPE)
                     .accessTokenValiditySeconds(10 * 60);
         }

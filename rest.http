@@ -25,3 +25,21 @@ username=admin&password=admin&grant_type=password&client_id=as400
 
 ###
 
+POST http://localhost:8080/oauth/token
+Content-Type: application/x-www-form-urlencoded
+
+refresh_token=3103057b-0b38-419b-8786-10e9a4206441&grant_type=refresh_token&client_id=as400
+
+###
+
+GET http://localhost:8080/api/v1/users/active
+Accept: application/json
+Authorization: bearer 785ca70d-c0d4-4a99-9b39-5169150d8133
+
+###
+
+DELETE http://localhost:8080/api/v1/users/active
+Accept: application/json
+Authorization: bearer 785ca70d-c0d4-4a99-9b39-5169150d8133
+
+###
