@@ -14,28 +14,30 @@ public class AccountsController {
 
     @NonNull
     private final AccountsService accountsService;
+    @NonNull
+    private final AccountsMapper accountsMapper;
     private final UriBuilder uriBuilder = new UriBuilder();
 
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<Account> createAccount() {
+    public ResponseEntity<AccountTo> createAccount() {
         Account account = accountsService.create();
         URI uri = uriBuilder.requestUriWithId(account.getId());
         return ResponseEntity.created(uri)
-                .body(account);
+                .body(accountsMapper.toAccountTransferObject(account));
     }
 
     @RequestMapping(value = "{id}", method = RequestMethod.GET)
-    public ResponseEntity<Account> getAccountById(@PathVariable("id") Long id) {
+    public ResponseEntity<AccountTransferObject> getAccountById(@PathVariable("id") Long id) {
         Account account = accountsService.getById(id);
-        return ResponseEntity.ok(account);
+        return ResponseEntity.ok(accountsMapper.toAccountTransferObject(account));
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<ResultPage<Account>> getAccountsPage(
+    public ResponseEntity<PageTransferObject<AccountTransferObject>> getAccountsPage(
             @RequestParam(name = "pageNumber", defaultValue = "0") int pageNumber,
             @RequestParam(name = "pageSize", defaultValue = "5") int pageSize) {
         ResultPage<Account> accountsPage = accountsService.get(pageNumber, pageSize);
-        return ResponseEntity.ok(accountsPage);
+        return ResponseEntity.ok(accountsMapper.toAccountTransferObjectsPage(accountsPage));
     }
 
     @RequestMapping(value = "{id}", method = RequestMethod.DELETE)
