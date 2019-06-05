@@ -1,4 +1,4 @@
-package pl.training.payments;
+package pl.training.payments.common;
 
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 

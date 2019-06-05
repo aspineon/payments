@@ -2,6 +2,7 @@ package pl.training.payments;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import pl.training.payments.accounts.Account;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

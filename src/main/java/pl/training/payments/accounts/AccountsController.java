@@ -1,9 +1,12 @@
-package pl.training.payments;
+package pl.training.payments.accounts;
 
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import pl.training.payments.common.PageTransferObject;
+import pl.training.payments.common.ResultPage;
+import pl.training.payments.common.UriBuilder;
 
 import java.net.URI;
 

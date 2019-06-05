@@ -1,10 +1,12 @@
-package pl.training.payments;
+package pl.training.payments.accounts;
 
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import pl.training.payments.InsufficientFundsException;
+import pl.training.payments.common.ResultPage;
 
 import java.util.function.Consumer;
 

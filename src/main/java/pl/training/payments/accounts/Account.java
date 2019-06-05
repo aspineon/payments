@@ -1,4 +1,4 @@
-package pl.training.payments;
+package pl.training.payments.accounts;
 
 import lombok.Data;
 

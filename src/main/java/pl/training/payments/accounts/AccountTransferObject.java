@@ -1,10 +1,10 @@
-package pl.training.payments;
+package pl.training.payments.accounts;
 
 import lombok.Data;
 
 @Data
 public class AccountTransferObject implements AccountTo {
 
-    private long b;
+    private long funds;
 
 }
