@@ -21,10 +21,12 @@ public class SecurityController {
 
     @NonNull
     private final TokenStore tokenStore;
+    @NonNull
+    private final PrincipalMapper principalMapper;
 
     @RequestMapping(method = RequestMethod.GET)
-    public UserDetails getActiveUser(Authentication authentication) {
-        return (UserDetails) authentication.getPrincipal();
+    public PrincipalTransferObject getActiveUser(Authentication authentication) {
+        return principalMapper.toPrincipalTransferObject(authentication);
     }
 
     @RequestMapping(method = RequestMethod.DELETE)

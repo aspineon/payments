@@ -1,5 +1,6 @@
 package pl.training.payments.security;
 
+import lombok.Setter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -11,8 +12,11 @@ import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
+import org.springframework.security.oauth2.provider.token.TokenEnhancer;
 import org.springframework.security.oauth2.provider.token.TokenStore;
-import org.springframework.security.oauth2.provider.token.store.JdbcTokenStore;
+import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
+import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 
 import javax.sql.DataSource;
 
@@ -21,16 +25,15 @@ import javax.sql.DataSource;
 public class SecurityConfig {
 
     @Value("classpath:h2-token-store-schema.sql")
+    @Setter
     private Resource schemaScript;
+    @Value("${signing-key}")
+    @Setter
+    private String jwtSigningKey;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
-    }
-
-    @Bean
-    public TokenStore tokenStore(DataSource dataSource) {
-        return new JdbcTokenStore(dataSource);
     }
 
     @Bean
@@ -46,6 +49,28 @@ public class SecurityConfig {
         initializer.setDataSource(dataSource);
         initializer.setDatabasePopulator(databasePopulator);
         return initializer;
+    }
+
+    @Bean
+    public JWTTokenEnhancer jwtTokenEnhancer() {
+        return new JWTTokenEnhancer();
+    }
+
+    /*@Bean
+    public TokenStore tokenStore(DataSource dataSource) {
+        return new JdbcTokenStore(dataSource);
+    }*/
+
+    @Bean
+    public JwtAccessTokenConverter jwtAccessTokenConverter() {
+        JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
+        converter.setSigningKey(jwtSigningKey);
+        return converter;
+    }
+
+    @Bean
+    public TokenStore jwtTokenStore(JwtAccessTokenConverter jwtAccessTokenConverter) {
+        return new JwtTokenStore(jwtAccessTokenConverter);
     }
 
 }

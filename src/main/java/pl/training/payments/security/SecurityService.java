@@ -25,7 +25,7 @@ public class SecurityService implements UserDetailsService {
         if (!username.equals("admin")) {
             throw new UsernameNotFoundException("User not found");
         }
-        GrantedAuthority authority = new SimpleGrantedAuthority("ADMIN");
+        GrantedAuthority authority = new SimpleGrantedAuthority("ROLE_ADMIN");
         String password = passwordEncoder.encode("admin");
         return new User("admin", password, List.of(authority));
     }
