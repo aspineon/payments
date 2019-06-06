@@ -17,10 +17,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class SecurityController {
 
-    private static final String TOKEN_PREFIX = "bearer ";
+    /*private static final String TOKEN_PREFIX = "bearer ";
 
     @NonNull
-    private final TokenStore tokenStore;
+    private final TokenStore tokenStore;*/
     @NonNull
     private final PrincipalMapper principalMapper;
 
@@ -29,7 +29,7 @@ public class SecurityController {
         return principalMapper.toPrincipalTransferObject(authentication);
     }
 
-    @RequestMapping(method = RequestMethod.DELETE)
+    /*@RequestMapping(method = RequestMethod.DELETE)
     public void logout(@RequestHeader("Authorization") String tokenHeader) {
         String tokenValue = tokenHeader.replace(TOKEN_PREFIX, "");
         OAuth2AccessToken token = tokenStore.readAccessToken(tokenValue);
@@ -38,6 +38,6 @@ public class SecurityController {
             tokenStore.removeRefreshToken(refreshToken);
         }
         tokenStore.removeAccessToken(token);
-    }
+    }*/
 
 }
